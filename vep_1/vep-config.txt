@@ -9,6 +9,9 @@
 ## - it's recommended to use shared/vep.h to manage this memory
 ##
 # this VEP uses no shared memories
+in mem01 have 1K private memory starting at 0K
+in mem02 have 1K private memory starting at 0K
+in mem12 have 1K private memory starting at 0K
 ##
 ## memory and stack allocation for each partition
 ## - per tile the system application with 32K is always added

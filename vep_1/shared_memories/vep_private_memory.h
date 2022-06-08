@@ -27,13 +27,13 @@ typedef volatile struct {
   uint32_t initialized;
   // more fields
 } vep_private_mem02_t;
-// #define USE_VEP_PRIVATE_MEM02
+ #define USE_VEP_PRIVATE_MEM02
 
 typedef volatile struct {
   uint32_t initialized;
   // more fields
 } vep_private_mem12_t;
-// #define USE_VEP_PRIVATE_MEM12
+ #define USE_VEP_PRIVATE_MEM12
 
 
 /***** DO NOT MODIFY CODE BELOW *****/
