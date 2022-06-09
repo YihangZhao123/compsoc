@@ -5,7 +5,8 @@
 #include <cheap_s.h>
 
 	/* Channel On One Processor */
+		circular_fifo fifo_AbsY;
 		volatile UInt16 buffer_AbsY[2];
-		unsigned int channel_AbsY_size = 1;
-		unsigned int buffer_AbsY_size = 2; // Because of circular fifo, the buffer_size=channel_size+1 
-		circular_fifo_UInt16 fifo_AbsY;
+		int channel_AbsY_size=1;
+		/*Because of circular fifo, the buffer_size=channel_size+1 */
+		int buffer_AbsY_size = 2;						

@@ -5,7 +5,8 @@
 #include <cheap_s.h>
 
 	/* Channel On One Processor */
+		circular_fifo fifo_GrayScaleToGetPx;
 		volatile DoubleType buffer_GrayScaleToGetPx[7];
 		int channel_GrayScaleToGetPx_size=6;
-		int buffer_GrayScaleToGetPx_size = 7; //Because of circular fifo, the buffer_size=channel_size+1 
-		circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+		/*Because of circular fifo, the buffer_size=channel_size+1 */
+		int buffer_GrayScaleToGetPx_size = 7;						

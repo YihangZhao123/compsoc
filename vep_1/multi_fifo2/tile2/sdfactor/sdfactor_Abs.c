@@ -14,10 +14,10 @@
 	extern volatile cheap const fifo_admin_GrayScaleToAbs;
 	extern volatile UInt16 * const fifo_data_GrayScaleToAbs;	
 					
-	extern circular_fifo_UInt16 fifo_AbsY;
-	extern circular_fifo_UInt16 fifo_AbsX;
-	extern circular_fifo_DoubleType fifo_absysig;
-	extern circular_fifo_DoubleType fifo_absxsig;
+	extern circular_fifo fifo_AbsY;
+	extern circular_fifo fifo_AbsX;
+	extern circular_fifo fifo_absysig;
+	extern circular_fifo fifo_absxsig;
 	/* Output FIFO */
 	/*
 	========================================
@@ -44,8 +44,8 @@ DoubleType resx;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_DoubleType(&fifo_absxsig, &resx,1);
-	read_fifo_DoubleType(&fifo_absysig, &resy,1);
+	read_fifo(&fifo_absxsig,(void*)&resx,1);
+	read_fifo(&fifo_absysig,(void*)&resy,1);
 	{
 		volatile UInt16 *tmp_ptrs[2];
 		while ((cheap_claim_tokens (fifo_admin_GrayScaleToAbs, (volatile void **) tmp_ptrs, 2)) < 2)
@@ -57,8 +57,8 @@ DoubleType resx;
 		
 		cheap_release_spaces (fifo_admin_GrayScaleToAbs, 2);
 	}
-	read_fifo_UInt16(&fifo_AbsX, &offsetX,1);
-	read_fifo_UInt16(&fifo_AbsY, &offsetY,1);
+	read_fifo(&fifo_AbsX,(void*)&offsetX,1);
+	read_fifo(&fifo_AbsY,(void*)&offsetY,1);
 
 	
 	/* Inline Code           */
@@ -75,8 +75,7 @@ DoubleType resx;
 	system_img_sink_address[offsetX][offsetY]=resx+resy;
 	
 	/* Write To Output Ports */
-				write_fifo_UInt16(&fifo_AbsX,&offsetX,1);
-				write_fifo_UInt16(&fifo_AbsY,&offsetY,1);
-
-    mytest();
+				write_fifo(&fifo_AbsX,(void*)&offsetX,1);
+				write_fifo(&fifo_AbsY,(void*)&offsetY,1);
+	mytest();
 	}

@@ -11,13 +11,13 @@
 	========================================
 	*/
 	/* Input FIFO */
-	extern circular_fifo_UInt16 fifo_GrayScaleX;
-	extern circular_fifo_UInt16 fifo_GrayScaleY;
+	extern circular_fifo fifo_GrayScaleX;
+	extern circular_fifo fifo_GrayScaleY;
 	/* Output FIFO */
 	extern volatile cheap const fifo_admin_GrayScaleToAbs;
 	extern volatile UInt16 * const fifo_data_GrayScaleToAbs;	
 					
-	extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+	extern circular_fifo fifo_GrayScaleToGetPx;
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -45,8 +45,8 @@ UInt16 dimX = dimX_global;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_UInt16(&fifo_GrayScaleX, &offsetX,1);
-	read_fifo_UInt16(&fifo_GrayScaleY, &offsetY,1);
+	read_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
+	read_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
 
 	
 	/* Inline Code           */
@@ -69,9 +69,9 @@ UInt16 dimX = dimX_global;
 	
 	/* Write To Output Ports */
 				
-				write_fifo_DoubleType(&fifo_GrayScaleToGetPx,gray,6);
-				write_fifo_UInt16(&fifo_GrayScaleX,&offsetX,1);
-				write_fifo_UInt16(&fifo_GrayScaleY,&offsetY,1);
+				write_fifo(&fifo_GrayScaleToGetPx,gray,6);
+				write_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
+				write_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
 				{
 					volatile UInt16 *tmp_ptrs[2];
 					while ((cheap_claim_spaces (fifo_admin_GrayScaleToAbs, (volatile void **) &tmp_ptrs[0], 2)) < 2)

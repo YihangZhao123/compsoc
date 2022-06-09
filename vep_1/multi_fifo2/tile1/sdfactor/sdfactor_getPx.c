@@ -11,7 +11,7 @@
 	========================================
 	*/
 	/* Input FIFO */
-	extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+	extern circular_fifo fifo_GrayScaleToGetPx;
 	/* Output FIFO */
 	extern volatile cheap const fifo_admin_gysig;
 	extern volatile DoubleType * const fifo_data_gysig;	
@@ -40,7 +40,7 @@ Array6OfDoubleType imgBlockX;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_DoubleType(&fifo_GrayScaleToGetPx, gray,6);
+	read_fifo(&fifo_GrayScaleToGetPx,(void*)gray,6);
 	
 	
 

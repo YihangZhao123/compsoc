@@ -3,7 +3,7 @@
 	#include "../../datatype/datatype_definition.h"
 	#include "../../circular_fifo_lib/circular_fifo_lib.h"
 	#include <cheap_s.h>
-	#include "sdfactor_Gx.h"
+	#include "sdfactor_Gy.h"
 	
 	/*
 	========================================
@@ -11,11 +11,11 @@
 	========================================
 	*/
 	/* Input FIFO */
-	extern volatile cheap const fifo_admin_gxsig;
-	extern volatile DoubleType * const fifo_data_gxsig;	
+	extern volatile cheap const fifo_admin_gysig;
+	extern volatile DoubleType * const fifo_data_gysig;	
 					
 	/* Output FIFO */
-	extern circular_fifo_DoubleType fifo_absxsig;
+	extern circular_fifo fifo_absysig;
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -27,38 +27,38 @@
 	Actor Function
 	========================================
 	*/			
-void actor_Gx(){
+void actor_Gy(){
 
 /*  initialize memory*/
-DoubleType gx; 
-Array6OfDoubleType imgBlockX; 
+DoubleType gy; 
+Array6OfDoubleType imgBlockY; 
 	
 	/* Read From Input Port  */
 				int ret=0;
 	{
 		volatile DoubleType *tmp_ptrs[6];
-		while ((cheap_claim_tokens (fifo_admin_gxsig, (volatile void **) tmp_ptrs, 6)) < 6)
-			 cheap_release_all_claimed_tokens (fifo_admin_gxsig);								
+		while ((cheap_claim_tokens (fifo_admin_gysig, (volatile void **) tmp_ptrs, 6)) < 6)
+			 cheap_release_all_claimed_tokens (fifo_admin_gysig);								
 		
 		for(int i=0;i<6;++i){
-			imgBlockX[i]=*tmp_ptrs[i];	
+			imgBlockY[i]=*tmp_ptrs[i];	
 		}
 		
-		cheap_release_spaces (fifo_admin_gxsig, 6);
+		cheap_release_spaces (fifo_admin_gysig, 6);
 	}
 
 	
 	/* Inline Code           */
-	/* in combFunction GxImpl */
-	gx=0;
-	gx=gx-imgBlockX[0];
-	gx=gx+imgBlockX[1];
-	gx=gx-2.0*imgBlockX[2];
-	gx=gx+2.0*imgBlockX[3];
-	gx=gx-imgBlockX[4];
-	gx=gx+imgBlockX[5];
+	/* in combFunction GyImpl */
+	gy=0;
+	gy=gy+imgBlockY[0];
+	gy=gy+2.0*imgBlockY[1];
+	gy=gy+imgBlockY[2];
+	gy=gy-imgBlockY[3];
+	gy=gy-2.0*imgBlockY[4];
+	gy=gy-imgBlockY[5];
 	
 	/* Write To Output Ports */
-				write_fifo_DoubleType(&fifo_absxsig,&gx,1);
+				write_fifo(&fifo_absysig,(void*)&gy,1);
 
 	}

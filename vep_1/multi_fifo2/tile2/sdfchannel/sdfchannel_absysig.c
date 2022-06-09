@@ -5,7 +5,8 @@
 #include <cheap_s.h>
 
 	/* Channel On One Processor */
+		circular_fifo fifo_absysig;
 		volatile DoubleType buffer_absysig[2];
 		int channel_absysig_size=1;
-		int buffer_absysig_size = 2; //Because of circular fifo, the buffer_size=channel_size+1 
-		circular_fifo_DoubleType fifo_absysig;
+		/*Because of circular fifo, the buffer_size=channel_size+1 */
+		int buffer_absysig_size = 2;						
