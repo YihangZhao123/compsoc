@@ -3,6 +3,6 @@
 /* Includes--------------------*/
 
 /* Function Prototype----------*/
-void subsystem_tile1();
-int init_tile1();
+void subsystem_tile0();
+int init_tile0();
 #endif		
