@@ -55,5 +55,5 @@ UInt32 s2;
 	
 	/* Write To Output Ports */
 				write_fifo_UInt32(&fifo_s4,&s4,1);
-	xil_printf("out : %d, %d, %d\n",out[0],out[1], out[2]);
+	xil_printf("p4 out: %d %d %d\n",out[0],out[1],out[2]);
 	}
