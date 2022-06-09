@@ -5,6 +5,8 @@
 MEMORY {
 mem : ORIGIN = 0x0, LENGTH = 0x00008000
 publicmem : ORIGIN = 0x82000000, LENGTH = 0x00080000 /* vep=1 tile=0 public regions of all veps */
+mem01 : ORIGIN = 0x80020000, LENGTH = 0x00000400 /* vep=1 tile=0 partition=3 private memory */
+mem02 : ORIGIN = 0x80030000, LENGTH = 0x00000400 /* vep=1 tile=0 partition=3 private memory */
 }
 _STACK_SIZE = 0x00001000;
 OUTPUT_ARCH( "riscv" )
@@ -35,6 +37,8 @@ SECTIONS
         . = ALIGN(4);
         _ebss = .;
    } >mem
+  .mem01 : { *(.mem01) } > mem01
+  .mem02 : { *(.mem02) } > mem02
   _end = .;
   .stack (NOLOAD) : {
           _stack_end = .;
