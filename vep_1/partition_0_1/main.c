@@ -3,22 +3,22 @@
 #include <stdint.h>
 #include <xil_printf.h>
 #include <platform.h>
-#include "../multi_fifo1/tile0/subsystem_tile0.h"
-#include "../multi_fifo1/datatype/datatype_definition.h"
-#include "../multi_fifo1/circular_fifo_lib/circular_fifo_lib.h"
+#include "../multi_fifo2/tile0/subsystem_tile0.h"
+#include "../multi_fifo2/datatype/datatype_definition.h"
+#include "../multi_fifo2/circular_fifo_lib/circular_fifo_lib.h"
 
 
 int main(){
 init_tile0();
 
-   extern circular_fifo_UInt32 fifo_s_in;
+   extern circular_fifo fifo_s_in;
    for(int i=0;i<5;++i){
        int a[4];
        a[0]=4*i+1;
        a[1]=4*i+2;
        a[2]=4*i+3;
        a[3]=4*i+4;
-       write_fifo_UInt32(&fifo_s_in,a,4);
+       write_fifo(&fifo_s_in,a,4);
    }
     subsystem_tile0();   
 

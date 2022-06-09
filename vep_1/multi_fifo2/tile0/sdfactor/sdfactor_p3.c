@@ -14,9 +14,9 @@
 	extern volatile cheap const fifo_admin_s5;
 	extern volatile UInt32 * const fifo_data_s5;	
 					
-	extern circular_fifo_UInt32 fifo_s3;
+	extern circular_fifo fifo_s3;
 	/* Output FIFO */
-	extern circular_fifo_UInt32 fifo_s6;
+	extern circular_fifo fifo_s6;
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -37,7 +37,7 @@ Array2OfUInt32Type s6;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_UInt32(&fifo_s3, s3,2);
+	read_fifo(&fifo_s3,(void*)s3,2);
 	
 	
 	{
@@ -60,6 +60,6 @@ Array2OfUInt32Type s6;
 	
 	/* Write To Output Ports */
 				
-				write_fifo_UInt32(&fifo_s6,s6,2);
+				write_fifo(&fifo_s6,s6,2);
 
 	}

@@ -5,7 +5,8 @@
 #include <cheap_s.h>
 
 	/* Channel On One Processor */
+		circular_fifo fifo_s4;
 		volatile UInt32 buffer_s4[2];
 		int channel_s4_size=1;
-		int buffer_s4_size = 2; //Because of circular fifo, the buffer_size=channel_size+1 
-		circular_fifo_UInt32 fifo_s4;
+		/*Because of circular fifo, the buffer_size=channel_size+1 */
+		int buffer_s4_size = 2;						

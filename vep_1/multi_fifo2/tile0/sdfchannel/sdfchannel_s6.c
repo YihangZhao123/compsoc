@@ -5,7 +5,8 @@
 #include <cheap_s.h>
 
 	/* Channel On One Processor */
+		circular_fifo fifo_s6;
 		volatile UInt32 buffer_s6[3];
 		int channel_s6_size=2;
-		int buffer_s6_size = 3; //Because of circular fifo, the buffer_size=channel_size+1 
-		circular_fifo_UInt32 fifo_s6;
+		/*Because of circular fifo, the buffer_size=channel_size+1 */
+		int buffer_s6_size = 3;						

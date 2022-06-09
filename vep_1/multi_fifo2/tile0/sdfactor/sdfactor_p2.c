@@ -3,7 +3,7 @@
 	#include "../../datatype/datatype_definition.h"
 	#include "../../circular_fifo_lib/circular_fifo_lib.h"
 	#include <cheap_s.h>
-	#include "sdfactor_p1.h"
+	#include "sdfactor_p2.h"
 	
 	/*
 	========================================
@@ -11,10 +11,12 @@
 	========================================
 	*/
 	/* Input FIFO */
-	extern circular_fifo_UInt32 fifo_s6;
-	extern circular_fifo_UInt32 fifo_s_in;
+	extern circular_fifo fifo_s1;
 	/* Output FIFO */
-	extern circular_fifo_UInt32 fifo_s1;
+	extern volatile cheap const fifo_admin_s2;
+	extern volatile UInt32 * const fifo_data_s2;	
+					
+	extern circular_fifo fifo_s3;
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -26,27 +28,33 @@
 	Actor Function
 	========================================
 	*/			
-void actor_p1(){
+void actor_p2(){
 
 /*  initialize memory*/
-UInt32 s6; 
-Array2OfUInt32Type s_in; 
+UInt32 s3; 
 UInt32 s1; 
+UInt32 s2; 
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_UInt32(&fifo_s_in, s_in,2);
-	
-	
-	read_fifo_UInt32(&fifo_s6, &s6,1);
+	read_fifo(&fifo_s1,(void*)&s1,1);
 
-	xil_printf("p1 reads from s_in: %d, %d\n",s_in[0],s_in[1]);
 	
 	/* Inline Code           */
-	/* in combFunction p1Body */
-	s1=s_in[0]+s_in[1]+s6;
+	/* in combFunction p2Body */
+	s2=s1;
+	s3=s1+1;
 	
 	/* Write To Output Ports */
-				write_fifo_UInt32(&fifo_s1,&s1,1);
+				{
+					volatile UInt32 *tmp_ptrs[1];
+					while ((cheap_claim_spaces (fifo_admin_s2, (volatile void **) &tmp_ptrs[0], 1)) < 1)
+						cheap_release_all_claimed_spaces (fifo_admin_s2);
+					
+					*tmp_ptrs[0]=s2;
+					
+					cheap_release_tokens (fifo_admin_s2, 1);
+				}
+				write_fifo(&fifo_s3,(void*)&s3,1);
 
 	}

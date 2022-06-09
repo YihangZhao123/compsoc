@@ -11,7 +11,7 @@
 	========================================
 	*/
 	/* Input FIFO */
-	extern circular_fifo_UInt32 fifo_s4;
+	extern circular_fifo fifo_s4;
 	/* Output FIFO */
 	extern volatile cheap const fifo_admin_s5;
 	extern volatile UInt32 * const fifo_data_s5;	
@@ -35,27 +35,22 @@ UInt32 s5;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	read_fifo_UInt32(&fifo_s4, &s4,1);
- xil_printf("debug--->in p5, after read\n");
+	read_fifo(&fifo_s4,(void*)&s4,1);
+
 	
 	/* Inline Code           */
 	/* in combFunction p5Body */
 	s5=s4+1;
-	 xil_printf("debug--->in p5, start write\n");
+	
 	/* Write To Output Ports */
 				{
 					volatile UInt32 *tmp_ptrs[1];
 					while ((cheap_claim_spaces (fifo_admin_s5, (volatile void **) &tmp_ptrs[0], 1)) < 1)
-					{
-						
 						cheap_release_all_claimed_spaces (fifo_admin_s5);
-
-					}
-						
-					xil_printf("get address %p , write s5 %d\n", tmp_ptrs[0],s5);
+					
 					*tmp_ptrs[0]=s5;
-					xil_printf("get address %p, value %d\n", tmp_ptrs[0], *tmp_ptrs[0]);
+					
 					cheap_release_tokens (fifo_admin_s5, 1);
 				}
- xil_printf("debug--->in p5, after write\n");
+
 	}
