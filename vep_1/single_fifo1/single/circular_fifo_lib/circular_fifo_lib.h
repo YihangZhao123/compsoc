@@ -16,43 +16,23 @@ SDFChannels
 
 /*
 =============================================================
-			If Token type is DoubleType 
+			If Token type is UInt32 
 =============================================================
 */
 typedef struct 
 {
-    DoubleType* buffer;
+    UInt32* buffer;
     size_t front;
     size_t rear;
 	size_t size;
 	size_t count;	    
-}circular_fifo_DoubleType;
+}circular_fifo_UInt32;
 
-void init_fifo_DoubleType(circular_fifo_DoubleType *channel ,DoubleType* buffer, size_t size);
+void init_fifo_UInt32(circular_fifo_UInt32 *channel ,UInt32* buffer, size_t size);
 
-void read_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* dst, size_t number);
-void write_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* src, size_t number);
-void PRINT_DoubleType(circular_fifo_DoubleType * fifo);
-
-/*
-=============================================================
-			If Token type is UInt16 
-=============================================================
-*/
-typedef struct 
-{
-    UInt16* buffer;
-    size_t front;
-    size_t rear;
-	size_t size;
-	size_t count;	    
-}circular_fifo_UInt16;
-
-void init_fifo_UInt16(circular_fifo_UInt16 *channel ,UInt16* buffer, size_t size);
-
-void read_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* dst, size_t number);
-void write_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* src, size_t number);
-void PRINT_UInt16(circular_fifo_UInt16 * fifo);
+void read_fifo_UInt32(circular_fifo_UInt32* channel,UInt32* dst, size_t number);
+void write_fifo_UInt32(circular_fifo_UInt32* channel,UInt32* src, size_t number);
+void PRINT_UInt32(circular_fifo_UInt32 * fifo);
 
 
 

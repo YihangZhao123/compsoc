@@ -2,7 +2,7 @@
 
 #include "../../datatype/datatype_definition.h"
 #include "../../circular_fifo_lib/circular_fifo_lib.h"
-#include "sdfactor_Gy.h"
+#include "sdfactor_p1.h"
 
 /*
 ========================================
@@ -10,10 +10,11 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_DoubleType fifo_gysig;
+extern circular_fifo_UInt32 fifo_s6;
+extern circular_fifo_UInt32 fifo_s_in;
 
 /* Output FIFO */
-extern circular_fifo_DoubleType fifo_absysig;
+extern circular_fifo_UInt32 fifo_s1;
 /*
 ========================================
 	Declare Extern Global Variables
@@ -26,29 +27,26 @@ extern circular_fifo_DoubleType fifo_absysig;
 ========================================
 */	
 
-void actor_Gy(){
+void actor_p1(){
 	
 	/*  initialize memory*/
 
-	DoubleType gy; 
-	Array6OfDoubleType imgBlockY; 
+	UInt32 s6; 
+	Array2OfUInt32Type s_in; 
+	UInt32 s1; 
 	/* Read From Input Port  */
 	int ret=0;
-	read_fifo_DoubleType(&fifo_gysig, imgBlockY,6);
+	read_fifo_UInt32(&fifo_s_in, s_in,2);
+	read_fifo_UInt32(&fifo_s6, &s6,1);
 	
+	xil_printf("p1 reads s_in:  %d, %d\n",s_in[0],s_in[1]);
 		
 	/* Inline Code           */
-	/* in combFunction GyImpl */
-	gy=0;
-	gy=gy+imgBlockY[0];
-	gy=gy+2.0*imgBlockY[1];
-	gy=gy+imgBlockY[2];
-	gy=gy-imgBlockY[3];
-	gy=gy-2.0*imgBlockY[4];
-	gy=gy-imgBlockY[5];
+	/* in combFunction p1Body */
+	s1=s_in[0]+s_in[1]+s6;
 		
 	/* Write To Output Ports */
-	write_fifo_DoubleType(&fifo_absysig,&gy,1);
+	write_fifo_UInt32(&fifo_s1,&s1,1);
 	 
 	
 }

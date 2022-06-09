@@ -1,10 +1,10 @@
 #include "subsystem.h"
 #include <stdio.h>
-#include "./sdfactor/sdfactor_Gx.h"
-#include "./sdfactor/sdfactor_Abs.h"
-#include "./sdfactor/sdfactor_Gy.h"
-#include "./sdfactor/sdfactor_GrayScale.h"
-#include "./sdfactor/sdfactor_getPx.h"
+#include "./sdfactor/sdfactor_p1.h"
+#include "./sdfactor/sdfactor_p2.h"
+#include "./sdfactor/sdfactor_p3.h"
+#include "./sdfactor/sdfactor_p4.h"
+#include "./sdfactor/sdfactor_p5.h"
 #include "../datatype/datatype_definition.h"
 #include "../circular_fifo_lib/circular_fifo_lib.h"
 /*
@@ -13,14 +13,22 @@
 ==============================================
 */	
 int subsystem(){
-	while(1){
-		actor_GrayScale();
-		actor_getPx();
-		actor_Gx();
-		actor_Gy();
-		actor_Abs();
+		int count=0;
 
-		test();
+
+	while(1){
+				xil_printf("-------loop  %d-----------------------\n",count++);
+
+
+		actor_p1();
+		actor_p2();
+		actor_p4();
+		actor_p5();
+		actor_p1();
+		actor_p2();
+		actor_p4();
+		actor_p5();
+		actor_p3();
 	}
 
 }
@@ -34,100 +42,70 @@ int subsystem(){
 	*/
 int init_subsystem(){
 	/* Extern Variables */
-	extern int ZeroValue;
-	extern int OneValue;
+	extern int ZeroValue1;
+	extern int ZeroValue2;
 	
-	/* extern sdfchannel GrayScaleToAbs*/
-	extern UInt16 buffer_GrayScaleToAbs[];
-	extern int buffer_GrayScaleToAbs_size;
-	extern circular_fifo_UInt16 fifo_GrayScaleToAbs;
+	/* extern sdfchannel s4*/
+	extern UInt32 buffer_s4[];
+	extern int buffer_s4_size;
+	extern circular_fifo_UInt32 fifo_s4;
 				
-	/* extern sdfchannel AbsY*/
-	extern UInt16 buffer_AbsY[];
-	extern int buffer_AbsY_size;
-	extern circular_fifo_UInt16 fifo_AbsY;
+	/* extern sdfchannel s5*/
+	extern UInt32 buffer_s5[];
+	extern int buffer_s5_size;
+	extern circular_fifo_UInt32 fifo_s5;
 				
-	/* extern sdfchannel gysig*/
-	extern DoubleType buffer_gysig[];
-	extern int buffer_gysig_size;
-	extern circular_fifo_DoubleType fifo_gysig;
+	/* extern sdfchannel s6*/
+	extern UInt32 buffer_s6[];
+	extern int buffer_s6_size;
+	extern circular_fifo_UInt32 fifo_s6;
 				
-	/* extern sdfchannel AbsX*/
-	extern UInt16 buffer_AbsX[];
-	extern int buffer_AbsX_size;
-	extern circular_fifo_UInt16 fifo_AbsX;
+	/* extern sdfchannel s_in*/
+	extern UInt32 buffer_s_in[];
+	extern int buffer_s_in_size;
+	extern circular_fifo_UInt32 fifo_s_in;
 				
-	/* extern sdfchannel GrayScaleToGetPx*/
-	extern DoubleType buffer_GrayScaleToGetPx[];
-	extern int buffer_GrayScaleToGetPx_size;
-	extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+	/* extern sdfchannel s1*/
+	extern UInt32 buffer_s1[];
+	extern int buffer_s1_size;
+	extern circular_fifo_UInt32 fifo_s1;
 				
-	/* extern sdfchannel gxsig*/
-	extern DoubleType buffer_gxsig[];
-	extern int buffer_gxsig_size;
-	extern circular_fifo_DoubleType fifo_gxsig;
+	/* extern sdfchannel s2*/
+	extern UInt32 buffer_s2[];
+	extern int buffer_s2_size;
+	extern circular_fifo_UInt32 fifo_s2;
 				
-	/* extern sdfchannel absysig*/
-	extern DoubleType buffer_absysig[];
-	extern int buffer_absysig_size;
-	extern circular_fifo_DoubleType fifo_absysig;
-				
-	/* extern sdfchannel absxsig*/
-	extern DoubleType buffer_absxsig[];
-	extern int buffer_absxsig_size;
-	extern circular_fifo_DoubleType fifo_absxsig;
-				
-	/* extern sdfchannel GrayScaleX*/
-	extern UInt16 buffer_GrayScaleX[];
-	extern int buffer_GrayScaleX_size;
-	extern circular_fifo_UInt16 fifo_GrayScaleX;
-				
-	/* extern sdfchannel GrayScaleY*/
-	extern UInt16 buffer_GrayScaleY[];
-	extern int buffer_GrayScaleY_size;
-	extern circular_fifo_UInt16 fifo_GrayScaleY;
+	/* extern sdfchannel s3*/
+	extern UInt32 buffer_s3[];
+	extern int buffer_s3_size;
+	extern circular_fifo_UInt32 fifo_s3;
 				
 	
 	/* initialize the channels*/
-init_fifo_UInt16(&fifo_GrayScaleToAbs,buffer_GrayScaleToAbs,buffer_GrayScaleToAbs_size);
-init_fifo_UInt16(&fifo_AbsY,buffer_AbsY,buffer_AbsY_size);
-init_fifo_DoubleType(&fifo_gysig,buffer_gysig,buffer_gysig_size);
-init_fifo_UInt16(&fifo_AbsX,buffer_AbsX,buffer_AbsX_size);
-init_fifo_DoubleType(&fifo_GrayScaleToGetPx,buffer_GrayScaleToGetPx,buffer_GrayScaleToGetPx_size);
-init_fifo_DoubleType(&fifo_gxsig,buffer_gxsig,buffer_gxsig_size);
-init_fifo_DoubleType(&fifo_absysig,buffer_absysig,buffer_absysig_size);
-init_fifo_DoubleType(&fifo_absxsig,buffer_absxsig,buffer_absxsig_size);
-init_fifo_UInt16(&fifo_GrayScaleX,buffer_GrayScaleX,buffer_GrayScaleX_size);
-init_fifo_UInt16(&fifo_GrayScaleY,buffer_GrayScaleY,buffer_GrayScaleY_size);
-			
-			
-
-			write_fifo_UInt16(&fifo_AbsY,&ZeroValue,1);
+init_fifo_UInt32(&fifo_s4,buffer_s4,buffer_s4_size);
+init_fifo_UInt32(&fifo_s5,buffer_s5,buffer_s5_size);
+init_fifo_UInt32(&fifo_s6,buffer_s6,buffer_s6_size);
+init_fifo_UInt32(&fifo_s_in,buffer_s_in,buffer_s_in_size);
+init_fifo_UInt32(&fifo_s1,buffer_s1,buffer_s1_size);
+init_fifo_UInt32(&fifo_s2,buffer_s2,buffer_s2_size);
+init_fifo_UInt32(&fifo_s3,buffer_s3,buffer_s3_size);
 			
 			
 			
 			
-			write_fifo_UInt16(&fifo_AbsX,&ZeroValue,1);
-
-			write_fifo_UInt16(&fifo_GrayScaleX,&ZeroValue,1);
 			
-			
-			write_fifo_UInt16(&fifo_GrayScaleY,&ZeroValue,1);
-			
-
-	// int x=0;
-	// int y=1;
-	// 		write_fifo_UInt16(&fifo_AbsY,&y,1);
+			write_fifo_UInt32(&fifo_s6,&ZeroValue1,1);
+			write_fifo_UInt32(&fifo_s6,&ZeroValue2,1);
 			
 			
 			
 			
-	// 		write_fifo_UInt16(&fifo_AbsX,&x,1);
-
-	// 		write_fifo_UInt16(&fifo_GrayScaleX,&x,1);
 			
 			
-	// 		write_fifo_UInt16(&fifo_GrayScaleY,&y,1);
+			
+			
+			
+			
 return 0;
 }		
 				
