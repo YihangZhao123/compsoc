@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <xil_printf.h>
 #include <platform.h>
-#include "../single_fifo2/single/tile/subsystem.h"
-#include "../single_fifo2/single/datatype/datatype_definition.h"
-#include "../single_fifo2/single/circular_fifo_lib/circular_fifo_lib.h"
+#include "../multi_fifo1/tile1/subsystem_tile1.h"
+#include "../multi_fifo1/datatype/datatype_definition.h"
+#include "../multi_fifo1/circular_fifo_lib/circular_fifo_lib.h"
 
 
 #define X 5
@@ -34,15 +34,12 @@ int main(){
     }
     system_img_source_global=b;
 
-    for(int i=0;i<Y;++i){
-          d[i]=c+i;
-    }    
 
 
-    system_img_sink_global=d;
 
-        init_subsystem();
-        subsystem();
+
+        init_tile1();
+        subsystem_tile1();
     
     // printf("\n");
     // for(int i=0;i<dimY_global;++i){
@@ -54,7 +51,7 @@ int main(){
     return 0;
 }
 
-void test(){
+void mytest(){
 
  		extern UInt16 dimX_global;
 		extern UInt16 dimY_global;

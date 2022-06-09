@@ -4,15 +4,15 @@ USER_LIBS :=
 USER_CFLAGS :=
 USER_LINK_FLAGS :=
 
-SOURCES +=  $(wildcard ../single_fifo2/single/*.c)  $(wildcard ../single_fifo2/single/tile/*.c) \
-			$(wildcard ../single_fifo2/single/tile/sdfactor/*.c)   $(wildcard ../single_fifo2/single/tile/sdfchannel/*.c) \
-			$(wildcard ../single_fifo2/single/datatype/*.c)  $(wildcard ../single_fifo2/single/circular_fifo_lib/*.c) 
+SOURCES +=  $(wildcard ../multi_fifo1/*.c)  $(wildcard ../multi_fifo1/tile1/*.c) \
+			$(wildcard ../multi_fifo1/tile1/sdfactor/*.c)   $(wildcard ../multi_fifo1/tile1/sdfchannel/*.c) \
+			$(wildcard ../multi_fifo1/datatype/*.c)  $(wildcard ../multi_fifo1/circular_fifo_lib/*.c) 
 
 
 
-HEADERS +=  $(wildcard ../single_fifo2/single/*.h)  $(wildcard ../single_fifo2/single/tile/*.h) \
-			$(wildcard ../single_fifo2/single/tile/sdfactor/*.h)   $(wildcard ../single_fifo2/single/tile/sdfchannel/*.h)\
-			$(wildcard ../single_fifo2/single/datatype/*.h)  $(wildcard ../single_fifo2/single/circular_fifo_lib/*.h)
+HEADERS +=  $(wildcard ../multi_fifo1/*.h)  $(wildcard ../multi_fifo1/tile1/*.h) \
+			$(wildcard ../multi_fifo1/tile1/sdfactor/*.h)   $(wildcard ../multi_fifo1/tile1/sdfchannel/*.h)\
+			$(wildcard ../multi_fifo1/datatype/*.h)  $(wildcard ../multi_fifo1/circular_fifo_lib/*.h)
 
 
 include ../../vep_0/share/make_tile.mk
