@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <xil_printf.h>
 #include <platform.h>
-#include "../single_fifo1/single/tile/subsystem.h"
-#include "../single_fifo1/single/datatype/datatype_definition.h"
-#include "../single_fifo1/single/circular_fifo_lib/circular_fifo_lib.h"
+#include "../single_fifo2/single/tile/subsystem.h"
+#include "../single_fifo2/single/datatype/datatype_definition.h"
+#include "../single_fifo2/single/circular_fifo_lib/circular_fifo_lib.h"
 
 
 #define X 5
